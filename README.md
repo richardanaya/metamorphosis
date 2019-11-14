@@ -1,6 +1,11 @@
-# metamorphosis 🌟🐛🦋
+# metamorphosis
 
 <a href="https://docs.rs/metamorphosis"><img src="https://img.shields.io/badge/docs-latest-blue.svg?style=flat-square" alt="docs.rs docs" /></a>
+
+```toml
+[dependencies]
+metamorphosis = "0.0"
+```
 
 A GPGPU computation graph executor for web assembly.
 
@@ -69,7 +74,7 @@ pub fn main() -> () {
     // specify `position + velocity*time_step` as a graph of computation
     kernel.set_compute_graph({
             // for each position in output matrix, find the position component 
-            // and its corresponding velocity  component from our input matricies
+            // and its corresponding velocity component from our input matricies
             let p = get_2d(position,OUTPUT_X,OUTPUT_Y); 
             let v = get_2d(velocity,OUTPUT_X,OUTPUT_Y); 
             // calculate a new position component
