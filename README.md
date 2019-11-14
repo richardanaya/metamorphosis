@@ -67,7 +67,7 @@ pub fn main() -> () {
     let time_step = kernel.input_float32(.1);
     
     // specify `position + velocity*time_step` as a graph of computation
-    kernel.set_compute_graph(ComputationGraphNode::Value(42.0));
+    kernel.set_compute_graph(add(get2d(position,OUTPUT_X,OUTPUT_Y),mul(get2d(velocity,OUTPUT_X,OUTPUT_Y),time_step)));
     
     // calculate the output 10 positions of the physics system
     let output = kernel.compute_2d(3, 10);
