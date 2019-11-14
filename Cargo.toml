@@ -3,6 +3,10 @@ name = "metamorphosis"
 version = "0.0.0"
 authors = ["Richard Anaya"]
 edition = "2018"
+license = "MIT"
+description = "A GPGPU computation graph executor for web assembly"
+repository = "https://www.github.com/richardanaya/metamorphosis"
+readme = "README.md"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
