@@ -45,23 +45,19 @@ impl Default for GPU {
     fn default() -> Self {
         GPU {
             fn_create_gpu: js!(
-                () => {
-                    debugger;
+                () => {;
                     return new GPU();
                 }
             ),
             fn_create_kernel: js!(
                 (gpu,shader) => {
-                    debugger;
-                    return gpu.createKernel(function() {
-                        return 42
-                    }, { output: [3,3] });
+                    return gpu.createKernel(eval("("+shader+")"));
                 }
             ),
             fn_compute_2d: js!(
                 (kernel,width,height) => {
-                    debugger;
-                    return kernel()
+                    kernel.setOutput([width, height]);
+                    return kernel();
                 }
             ),
         }
