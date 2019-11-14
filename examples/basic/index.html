@@ -1,0 +1,26 @@
+<script src="https://cdn.jsdelivr.net/gh/gpujs/gpu.js/dist/gpu-browser.min.js"></script>
+<script src="https://cdn.jsdelivr.net/gh/richardanaya/js_ffi/js_ffi.js"></script>
+<script>
+js_ffi.run("example.wasm");
+</script>
+const gpu = new GPU();
+const kernel = gpu.createKernel(function(positions,velocity,time) {
+    return positions[this.thread.y][this.thread.x]+velocity[this.thread.y][this.thread.x]*time
+}, { output: [3,2] });
+let output = kernel(GPU.input([1,2,3,1,2,3],[3,2]),GPU.input([1,0,0,0,2,0],[3,2]),1);
+console.log(kernel.toJSON());
+console.log(output)
+</script>
+
+
+
+let position = kernel.input_2d(Vec<Float32>,3,10);
+let velocity = kernel.input_2d(Vec<Float32>,3,10);
+let time =  kernel.var_float();
+kernel.graph({
+    let offset = mul(velocity,time);
+    add(value_2d(position,OUTPUT_X,OUTPUT_Y),offset)
+});
+let result = kernel.output_2d(3,10)
+position.update(result)
+let result = kernel.output_2d(3,10)
