@@ -68,11 +68,11 @@ pub fn main() -> () {
     
     // specify `position + velocity*time_step` as a graph of computation
     kernel.set_compute_graph({
-            // for each position in output matrix
-            // find the position component and its corresponding velocity component
+            // for each position in output matrix, find the position component 
+            // and its corresponding velocity  component from our input matricies
             let p = get2d(position,OUTPUT_X,OUTPUT_Y); 
             let v = get2d(velocity,OUTPUT_X,OUTPUT_Y); 
-            // calculate a new position
+            // calculate a new position component
             add(p,mul(v,time_step))
         });
     
