@@ -8,7 +8,7 @@ edition = "2018"
 
 [dependencies]
 metamorphosis = {path="../../"}
-js_ffi = "0.2"
+js_ffi = "0.3"
 
 [lib]
 crate-type =["cdylib"]

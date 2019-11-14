@@ -15,6 +15,21 @@ pub struct GPUKernel {
     kernel: Option<JSObject>,
 }
 
+pub struct ComputationResult(JSObject);
+
+impl ToJSValue for ComputationResult {
+    fn to_js_value(&self) -> JSValue {
+        (self.0).0
+    }
+}
+
+impl ToJSValue for &ComputationResult {
+    fn to_js_value(&self) -> JSValue {
+        (self.0).0
+    }
+}
+
+
 impl GPUKernel {
     pub fn new() -> Self {
         let api = globals::get::<GPU>();
@@ -29,9 +44,9 @@ impl GPUKernel {
         self.kernel = Some(api.create_kernel(&self.gpu, &node.to_shader()));
     }
 
-    pub fn compute_2d(&mut self, width: u32, height: u32) -> JSObject {
+    pub fn compute_2d(&mut self, width: u32, height: u32) -> ComputationResult {
         let api = globals::get::<GPU>();
-        api.compute_2d(self.kernel.as_ref().unwrap(), width, height)
+        ComputationResult(api.compute_2d(self.kernel.as_ref().unwrap(), width, height))
     }
 }
 
@@ -72,7 +87,7 @@ impl GPU {
     fn create_kernel(&self, gpu: &JSObject, shader: &str) -> JSObject {
         JSObject(self.fn_create_kernel.invoke_2(
             TYPE_OBJECT,
-            gpu.as_js_value(),
+            gpu,
             TYPE_STRING,
             to_js_string(shader),
         ))
@@ -81,11 +96,11 @@ impl GPU {
     fn compute_2d(&self, kernel: &JSObject, width: u32, height: u32) -> JSObject {
         JSObject(self.fn_compute_2d.invoke_3(
             TYPE_OBJECT,
-            kernel.as_js_value(),
+            kernel,
             TYPE_NUM,
-            width.into(),
+            width as JSValue,
             TYPE_NUM,
-            height.into(),
+            height as JSValue,
         ))
     }
 }
