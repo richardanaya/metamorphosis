@@ -4,6 +4,10 @@
 
 A GPGPU computation graph executor for web assembly.
 
+- [x] 2d float matrix inputs
+- [x] float scalar inputs
+- [x] 2d float matrix outputs
+
 # Generate a matrix of 42
 
 ```rust
