@@ -41,7 +41,7 @@ pub fn main() -> () {
     let mut kernel = GPUKernel::new();
     
     // create a matrix representing 10 positions 
-    let position = kernel.input_2d(vec![
+    let mut position = kernel.input_2d(vec![
         0.0,0.0,0.0,
         0.0,0.0,0.0,
         0.0,0.0,0.0,
@@ -82,6 +82,11 @@ pub fn main() -> () {
         });
     
     // calculate the output 10 positions of the physics system
-    let output = kernel.compute_2d(3, 10);
+    let mut output = kernel.compute_2d(3, 10);
+    
+    // set our output matrix as our input position matrix
+    position.update(output)
+    // run it again to step forward in simulation
+    output = kernel.compute_2d(3, 10);
 }
 ```
