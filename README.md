@@ -8,7 +8,7 @@ A GPGPU computation graph executor for web assembly.
 - [x] float scalar inputs
 - [x] 2d float matrix outputs
 
-# Generate a matrix of 42
+# Generate a 512x515 matrix of 42
 
 ```rust
 use metamorphosis::*;
@@ -16,7 +16,10 @@ use metamorphosis::*;
 #[no_mangle]
 pub fn main() -> () {
     let mut kernel = GPUKernel::new();
+    // for each position in our output matrix we will execute this 
+    // compute graph node that just returns 42
     kernel.set_compute_graph(ComputationGraphNode::Value(42.0));
+    // run it
     let output = kernel.compute_2d(512, 512);
 }
 ```
