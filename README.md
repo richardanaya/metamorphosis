@@ -19,7 +19,7 @@ pub fn main() -> () {
     // for each position in our output matrix we will execute this 
     // compute graph node that just returns 42
     kernel.set_compute_graph(ComputationGraphNode::Value(42.0));
-    // run it
+    // run it for a 512x512 output matrix
     let output = kernel.compute_2d(512, 512);
 }
 ```
