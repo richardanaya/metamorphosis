@@ -20,7 +20,7 @@ pub fn main() -> () {
 ```
 
 # A simple physics system
-This uses webgl to parallel calculate a simple `position + velocity*time_step` calculation for 10 positions
+This uses calculate a `position + velocity*time_step` calculation for 10 positions
 ```rust
 use js_ffi::*;
 use metamorphosis::*;
