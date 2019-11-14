@@ -19,8 +19,10 @@ pub fn main() -> () {
 }
 ```
 
-# A simple physics system
-This uses calculate a `position + velocity*time_step` calculation for 10 positions
+# Physics System
+
+This calculate a `position + velocity*time_step` calculation for 10 positions in parallel
+
 ```rust
 use js_ffi::*;
 use metamorphosis::*;
