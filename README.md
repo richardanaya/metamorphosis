@@ -67,7 +67,14 @@ pub fn main() -> () {
     let time_step = kernel.input_float32(.1);
     
     // specify `position + velocity*time_step` as a graph of computation
-    kernel.set_compute_graph(add(get2d(position,OUTPUT_X,OUTPUT_Y),mul(get2d(velocity,OUTPUT_X,OUTPUT_Y),time_step)));
+    kernel.set_compute_graph({
+            // for each position in output matrix
+            // find the position component and its corresponding velocity component
+            let p = get2d(position,OUTPUT_X,OUTPUT_Y); 
+            let v = get2d(velocity,OUTPUT_X,OUTPUT_Y); 
+            // calculate a new position
+            add(p,mul(v,time_step))
+        });
     
     // calculate the output 10 positions of the physics system
     let output = kernel.compute_2d(3, 10);
