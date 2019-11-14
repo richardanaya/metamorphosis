@@ -86,6 +86,7 @@ pub fn main() -> () {
     
     // set our output matrix as our input position matrix
     position.update(output)
+    
     // run it again to step forward in simulation
     output = kernel.compute_2d(3, 10);
 }
