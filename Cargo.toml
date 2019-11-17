@@ -11,5 +11,5 @@ readme = "README.md"
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-js_ffi = "0.3"
+js_ffi = "0.5"
 globals = "1"
