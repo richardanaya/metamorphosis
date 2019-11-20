@@ -57,19 +57,19 @@ pub struct GPUKernel {
 pub struct ComputationResult(JSObject);
 
 impl ToJSValue for ComputationResult {
-    fn to_js_value(&mut self) -> JSValue {
+    fn to_js_value(&self) -> JSValue {
         (self.0).to_js_value()
     }
-    fn to_js_type(&mut self) -> JSType {
+    fn to_js_type(&self) -> JSType {
         (self.0).to_js_type()
     }
 }
 
 impl ToJSValue for &ComputationResult {
-    fn to_js_value(&mut self) -> JSValue {
+    fn to_js_value(&self) -> JSValue {
         (&self.0).0
     }
-    fn to_js_type(&mut self) -> JSType {
+    fn to_js_type(&self) -> JSType {
         (&self.0).to_js_type()
     }
 }
@@ -102,7 +102,7 @@ impl GPUKernel {
                 height,
             ))
         } else {
-            js!(console.error).invoke_1(JSString::from("kernel not configured"));
+            js!(console.error).invoke_1("kernel not configured");
             panic!();
         }
     }
@@ -168,10 +168,7 @@ impl Default for GPU {
 
 impl GPU {
     fn create_kernel(&self, params: &JSObject, shader: &str) -> JSObject {
-        JSObject(
-            self.fn_create_kernel
-                .invoke_2(params, JSString::from(shader)),
-        )
+        JSObject(self.fn_create_kernel.invoke_2(params, shader))
     }
 
     fn create_params(&self) -> JSObject {
@@ -185,24 +182,16 @@ impl GPU {
         width: u32,
         height: u32,
     ) -> JSObject {
-        JSObject(self.fn_compute_2d.invoke_4(
-            params,
-            kernel,
-            JSNumber::from(width),
-            JSNumber::from(height),
-        ))
+        JSObject(self.fn_compute_2d.invoke_4(params, kernel, width, height))
     }
 
     fn add_input_2d(&self, gpu: &JSObject, data: Vec<f32>, width: u32, height: u32) -> String {
-        JSString::to_string(self.fn_add_input_2d.invoke_4(
-            gpu,
-            JSTypedArray::from(&data),
-            JSNumber::from(width),
-            JSNumber::from(height),
-        ))
+        self.fn_add_input_2d
+            .invoke_4(gpu, &data, width, height)
+            .as_string()
     }
 
     fn add_input_f32(&self, gpu: &JSObject, val: f32) -> String {
-        JSString::to_string(self.fn_add_input_f32.invoke_2(gpu, JSNumber::from(val)))
+        self.fn_add_input_f32.invoke_2(gpu, val).as_string()
     }
 }
